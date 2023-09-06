@@ -1,35 +1,46 @@
-import { client } from "../db.js";
-import { ObjectId } from "bson";
-import jwt from "jsonwebtoken"
-import dotenv from "dotenv"
+import {client} from "../db.js";
+import { ObjectId } from "bson"; 
+import jwt from "jsonwebtoken";
 
-dotenv.config()
-export function addUser(data) {
-     return client
-        .db("User")
-        .collection("user-credential")
-        .insertOne(data)
-}
-export function getUser(email) {
+export function addUser(data){
     return client
-        .db("User")
-        .collection("user-credential")
-        .findOne({email:email})
-
+    .db("userData")
+    .collection("users")
+    .insertOne(data)
 }
 
+export function getUser(data){
+    return client
+    .db("userData")
+    .collection("users")
+    .findOne(data)
+} 
 
-export function getAll() {
-     return client
-        .db("User")
-        .collection("user-credential")
-        .find()
-        .toArray()
+export function getUserByID(id){
+    return client
+    .db("userData")
+    .collection("users")
+    .findOne({_id: new ObjectId(id)})
+} 
+
+export function resetPassword(id, data){
+    return client
+    .db("userData")
+    .collection("users")
+    .findOneAndUpdate({_id: new ObjectId(id)}, {$set:data})
 }
-export function generateToken(id) {
+
+export function forgotPassword(email, data){
+    return client
+    .db("userData")
+    .collection("users")
+    .findOneAndUpdate({email:email}, {$set:data})
+}
+
+export function generateToken(id,secret){
     return jwt.sign(
-    { id },
-    process.env.SECRET_KEY,
-        { expiresIn: "30d" }
+        {id},
+        secret,
+        {expiresIn:"10m"}
     )
 }
