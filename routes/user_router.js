@@ -2,7 +2,7 @@ import express from "express"
 import bcrypt from "bcryptjs"
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
-import { addUser, forgotPassword, generateToken, getUser, getUserByID, resetPassword } from "../Controller/user-controller.js";
+import { addUser, forgotPassword, generateToken, getUser, getUserByID, resetPassword } from "../controller/user-controller.js";
 const router = express.Router()
 
 const transporter = nodemailer.createTransport({
