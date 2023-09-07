@@ -90,7 +90,7 @@ router.post("/forgot-password", async(req, res) => {
         const token = generateToken(user._id, secret); 
         
         const link = `http://localhost:3000/authorize/${user._id}/${token}`;
-        // const link = `https://resilient-puppy-b7932d.netlify.app/authorize?id=${user._id}&token=${token}`;
+       
         const mailOptions = {
           from: 'resetpasswordalert@outlook.com',
           to: user.email,
